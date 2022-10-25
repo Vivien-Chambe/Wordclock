@@ -19,6 +19,10 @@ def print_clock (grid,font,screen,timestamp):
     hour = timestamp[0]
     minute = timestamp[1]
 
+    if minute>30:
+        hour = (hour+1)%24
+
+
     for i in range(2):
         text = font.render(grid[0][i], True, (255, 255, 255))
         screen.blit(text, ((1+i)*50, 50))
