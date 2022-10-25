@@ -2,16 +2,17 @@ import time
 import pygame 
 import random as r
 
-grid = [["I","L","N","E","S","T","O","D","E","U","X"],
-        ["Q","U","A","T","R","E","T","R","O","I","S"],
-        ["N","E","U","F","U","N","E","S","E","P","T"],
-        ["H","U","I","T","S","I","X","C","I","N","Q"],
-        ["M","I","D","I","X","M","I","N","U","I","T"],
-        ["O","N","Z","E","R","H","E","U","R","E","S"],
+grid =[
+        ["I","L","N","E","S","T","O","D","E","U","X"],
+        ["Q","U","A","T","R","E","T","R","O","I","S"], 
+        ["N","E","U","F","U","N","E","S","E","P","T"], 
+        ["H","U","I","T","S","I","X","C","I","N","Q"], 
+        ["M","I","D","I","X","M","I","N","U","I","T"], 
+        ["O","N","Z","E","R","H","E","U","R","E","S"], 
         ["M","O","I","N","S","O","L","E","D","I","X"],
         ["E","T","R","Q","U","A","R","T","P","M","D"],
-        ["V","I","N","G","T","-","C","I","N","Q","U"],
-        ["E","T","S","D","E","M","I","E","P","A","M"],
+        ["V","I","N","G","T","-","C","I","N","Q","U"], 
+        ["E","T","S","D","E","M","I","E","P","A","M"], 
         ]  
 
 def print_clock (grid,font,screen,timestamp):
@@ -101,22 +102,37 @@ def print_clock (grid,font,screen,timestamp):
             screen.blit(text, ((1+10)*50, (6)*50))
 
     ##Print des minutes
-    if (minutes >= 15  and minutes <20) or (minutes >= 30  and minutes <35):
-        for i in range(0,2): ##ET
-            text = font.render(grid[7][i], True, (255, 255, 255))
-            screen.blit(text, ((1+i)*50, (8)*50))
-        if minutes >= 15  and minutes <20:
+    if (minutes >= 15  and minutes <20) or (minutes >= 45 and minutes <50):
+        if (minutes >= 15  and minutes <20):
+            for i in range(0,2): ##ET premier
+                text = font.render(grid[7][i], True, (255, 255, 255))
+                screen.blit(text, ((1+i)*50, (8)*50))
             for i in range(3,8): ##QUART
                 text = font.render(grid[7][i], True, (255, 255, 255))
                 screen.blit(text, ((1+i)*50, (8)*50))
-            ##print des minutes modulo 5
+                ##print des minutes modulo 5
+        elif (minutes >= 45 and minutes <50):
+            for i in range(0,5): ##MOINS
+                text = font.render(grid[6][i], True, (255, 255, 255))
+                screen.blit(text, ((1+i)*50, (7)*50))
+            for i in range(6,8): ##LE
+                text = font.render(grid[6][i], True, (255, 255, 255))
+                screen.blit(text, ((1+i)*50, (7)*50))
+
+    elif (minutes >= 30  and minutes <35):
+        for i in range(0,2): ##ET deuxieme
+            text = font.render(grid[9][i], True, (255, 255, 255))
+            screen.blit(text, ((1+i)*50, (10)*50))
+        for i in range(8,11): ##DEMI
+            text = font.render(grid[7][i], True, (255, 255, 255))
+            screen.blit(text, ((1+i)*50, (8)*50))
 
 
 
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800, 800))
+    screen = pygame.display.set_mode((800, 700))
     pygame.display.set_caption("Word Clock")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("Arial", 50)
@@ -132,6 +148,9 @@ def main():
                 if event.key == pygame.K_r:
                     timestamp = [r.randint(0,23),r.randint(0,59)]
                     print (timestamp)
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    return
         screen.fill((0, 0, 0))
         print_clock(grid,font,screen,timestamp)
         pygame.display.flip()
