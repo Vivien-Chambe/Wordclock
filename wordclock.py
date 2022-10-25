@@ -17,12 +17,12 @@ grid = [["I","L","N","E","S","T","O","D","E","U","X"],
 def print_clock (grid,font,screen,timestamp):
     
     hour = timestamp[0]
-    minute = timestamp[1]
+    minutes = timestamp[1]
 
-    if minute>30:
+    if minutes>30:
         hour = (hour+1)%24
 
-
+##Print des heures
     for i in range(2):
         text = font.render(grid[0][i], True, (255, 255, 255))
         screen.blit(text, ((1+i)*50, 50))
@@ -99,17 +99,24 @@ def print_clock (grid,font,screen,timestamp):
         if hour != 1 and hour != 13:
             text = font.render(grid[5][10], True, (255, 255, 255))
             screen.blit(text, ((1+10)*50, (6)*50))
-        
 
-        
-        
+    ##Print des minutes
+    if (minutes >= 15  and minutes <20) or (minutes >= 30  and minutes <35):
+        for i in range(0,2): ##ET
+            text = font.render(grid[7][i], True, (255, 255, 255))
+            screen.blit(text, ((1+i)*50, (8)*50))
+        if minutes >= 15  and minutes <20:
+            for i in range(3,8): ##QUART
+                text = font.render(grid[7][i], True, (255, 255, 255))
+                screen.blit(text, ((1+i)*50, (8)*50))
+            ##print des minutes modulo 5
 
 
 
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 800))
     pygame.display.set_caption("Word Clock")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("Arial", 50)
